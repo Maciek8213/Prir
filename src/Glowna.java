@@ -12,12 +12,13 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class Glowna {
-	
+	static int [] tab;
+	static int ilosc_odpowiedzi;
 	public static void main(String[] args) {
 		//inicjalizacja zmiennych
 		
 		String czy_generowac;
-		int [] tab;
+		
 		
 		System.out.println("Czy chcesz wygenerowac T/N");
 		czy_generowac = new Scanner(System.in).next();
@@ -27,18 +28,20 @@ public class Glowna {
 		
 		tab=inicjalizuj_generowanie();
 		
-		}else
-		{
+		}
+		
 			int ilosc_watkow;
+			
 			System.out.println("podaj maksymalna ilosc watkow :");
 			ilosc_watkow = Integer.valueOf(new Scanner(System.in).next());
-			
+			System.out.println("podaj ilosc odpowieddzi w pliku: ");
+			ilosc_odpowiedzi = Integer.valueOf(new Scanner(System.in).next());
 			//tu bedzie zczytywanie z pliku do tablicy 
 			
 			
-			Watek maciek = new Watek(ilosc_watkow);
+			Watek maciek = new Watek(ilosc_watkow );
 			
-		}
+		
 		
 	
 		System.out.println("Program zakonczyl prace  ");
@@ -63,6 +66,7 @@ public class Glowna {
 			{
 				System.out.println("Podaj poprawna ilosc szukanych !");
 				szukane = Integer.valueOf(new Scanner(System.in).next());
+				ilosc_odpowiedzi=szukane;
 			}
 			
 			// generuj

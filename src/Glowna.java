@@ -15,10 +15,41 @@ public class Glowna {
 	
 	public static void main(String[] args) {
 		//inicjalizacja zmiennych
+		
+		String czy_generowac;
 		int [] tab;
+		
+		System.out.println("Czy chcesz wygenerowac T/N");
+		czy_generowac = new Scanner(System.in).next();
+	
+		if(czy_generowac.equals("T") || czy_generowac.equals("t"))
+		{
+		
+		tab=inicjalizuj_generowanie();
+		
+		}else
+		{
+			int ilosc_watkow;
+			System.out.println("podaj maksymalna ilosc watkow :");
+			ilosc_watkow = Integer.valueOf(new Scanner(System.in).next());
+			
+			//tu bedzie zczytywanie z pliku do tablicy 
+			
+			
+			Watek maciek = new Watek(ilosc_watkow);
+			
+		}
+		
+	
+		System.out.println("Program zakonczyl prace  ");
+	}
+
+	private static int[] inicjalizuj_generowanie() {
+		
+		//Podawanie liczb
+		int [] tab = null;
 		int zczytana;	
 		int szukane;
-		//Podawanie liczb
 		System.out.println("Podaj ilosc liczb do wygenerowania : ");
 		zczytana = Integer.valueOf(new Scanner(System.in).next());
 		//jezeli liczba z zakresu
@@ -27,13 +58,14 @@ public class Glowna {
 		//Podaj ilosc czukanych $
 			System.out.println("Podaj ilosc szukanych");
 			szukane = Integer.valueOf(new Scanner(System.in).next());
-			//generuj
+			//sprawdz czy dobrze podal
 			while(szukane <= 0)
 			{
 				System.out.println("Podaj poprawna ilosc szukanych !");
 				szukane = Integer.valueOf(new Scanner(System.in).next());
 			}
-		
+			
+			// generuj
 			try {
 				tab=generuj(zczytana , szukane);
 			} catch (FileNotFoundException e) {
@@ -41,12 +73,7 @@ public class Glowna {
 			} //generuj
 			
 		}
-		
-		System.out.println("Program zakonczyl prace  ");
-
-		
-		
-		
+		return tab;
 		
 	}
 
@@ -115,5 +142,4 @@ public class Glowna {
 		System.out.println("//"+licz);
 		
 	}
-
 }

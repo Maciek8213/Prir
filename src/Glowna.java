@@ -28,6 +28,9 @@ public class Glowna {
 		
 		tab=inicjalizuj_generowanie();
 		
+		}else
+		{
+			tab=zczytaj_z_pliku();
 		}
 		
 			int ilosc_watkow;
@@ -45,6 +48,28 @@ public class Glowna {
 		
 	
 		System.out.println("Program zakonczyl prace  ");
+	}
+
+	private static int[] zczytaj_z_pliku() {
+		int tab [];
+		Scanner in;
+		try {
+			in = new Scanner(new File("Liczby.txt"));
+		
+			while(in.hasNext())
+			{
+				in.next();
+			}		
+		
+		
+		
+		
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.err.println("Plik Liczby.txt nie istnieje");
+		}
+		
+		return null;
 	}
 
 	private static int[] inicjalizuj_generowanie() {
@@ -122,6 +147,7 @@ public class Glowna {
 		{
 			System.out.println("Utworzono prawidlowo");
 		}else{System.out.println("Blad przy wpisywaniu dolarow");}
+		zapis.println("KONIEC");
 		zapis.close();
 		return tab_liczb;
 	}

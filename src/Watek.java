@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.IllformedLocaleException;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -26,32 +27,38 @@ public class Watek {
 		ExecutorService exe = Executors.newFixedThreadPool(10);
 		
 		for(int j=1; j<=liczba ;j++)
-		{	System.out.print("uruchomilem watkow: ");
+			
+		{	//System.out.print("uruchomilem watkow: ");
+			Integer maciek=0;
 			List<Future> lista_watkow = new  ArrayList<Future>();
 			Dzialanie.znalezione=0;
 			long current = System.currentTimeMillis(); 
 			for(int i= 1 ; i <=j ; i++)
 			{
-				lista_watkow.add(exe.submit( new Dzialanie(i) ));
-				System.out.print(i+", ");
+				lista_watkow.add(exe.submit( new Dzialanie(i , j) ));
+			//	System.out.print(i+", ");
 			}
 			
 			int sumuj=0;
-			for(Future<String> x : lista_watkow)
+			for(Future<Integer> x : lista_watkow)
 			{
+				
 				try {
-					if(x.get().equals("znalazlem"))
-					{
-						++sumuj;
-					}
+					 maciek =maciek+x.get();
+					
+					 if(maciek == Glowna.ilosc_odpowiedzi)
+					 {
+						Dzialanie.znalezione=Glowna.ilosc_odpowiedzi;
+						break;
+					 }
 				} catch (InterruptedException | ExecutionException e) {
 					// TODO Auto-generated catch block
-					//System.out.print(b);
 					e.printStackTrace();
 				}
+				
 			}
 			
-			if(j==sumuj)
+			if(j==maciek)
 			{
 				System.out.println(j+"Watkow zakonczylo prace po : " + (System.currentTimeMillis()-current) + " sekundach");
 			}else

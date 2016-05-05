@@ -1,8 +1,7 @@
 import java.util.concurrent.Callable;
 
 public class Dzialanie implements Callable<Integer> {
-	static int znalezione;
-	static boolean koniec=false;
+	static volatile int znalezione=0;
 	int numer_watku;
 	int ilosc_watkow;
 	int zakres;
@@ -16,36 +15,41 @@ public class Dzialanie implements Callable<Integer> {
 	}
 	@Override
 	public Integer call() throws Exception {
-		pokarz_info();
-	
+	//	pokarz_info();
+		int test=0;
 		int koniec_tablicy;
-		int tab[] =Glowna.tab;
-		int k=0;
+		int tab[] = new int [Glowna.tab.length] ;
+		System.arraycopy( Glowna.tab, 0, tab, 0, Glowna.tab.length );
 		if(numer_watku==ilosc_watkow)
 		{
-			koniec_tablicy=(tab.length-1);
+			koniec_tablicy=tab.length;
 		}else
 		{
 			koniec_tablicy=(numer_watku*zakres);
 		}
 		for(int i=((numer_watku-1)*zakres) ; i<koniec_tablicy ; i++ )
-		{	System.out.println("Watek : "+numer_watku+":"+i);
+		{	//System.out.println("Watek : "+numer_watku+":"+i);
+			//dopisz(tab ,i ,test);
 			if(tab[i] == -100) // nie wiem czy to dobrze sprawdzam
-			{	++k;
-				
-				System.out.println("Watek : "+numer_watku+":"+i+"TUJEST");
+			{	
+				test++;
+		//	System.out.println("\nWatek : "+numer_watku+":"+i+"TUJEST"); //<--- to czasem warto odznaczyc
 			//	System.out.println("Watek " + numer_watku + " znalaz³ "+k+" Dolara");
 			}
+			
+			
+			
 			if(znalezione == Glowna.ilosc_odpowiedzi)
 			{
-				break;
-	///			System.out.println("ZWRACAMMMMM !!!");
-				
+		//		return 0;
 			//	return "znalazlem";
-				
 			}
 		}
-		return k;
+		return test;
+	}
+	synchronized void dopisz(int [] tab,int i, int test) {
+		
+		
 	}
 	private void pokarz_info() {
 		System.out.print("Watek" + numer_watku+"LENGHT-1 :"+(Glowna.tab.length-1));

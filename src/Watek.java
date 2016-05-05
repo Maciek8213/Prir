@@ -33,24 +33,30 @@ public class Watek {
 			List<Future> lista_watkow = new  ArrayList<Future>();
 			Dzialanie.znalezione=0;
 			long current = System.currentTimeMillis(); 
+			long koniec = 0;
+			//rozpoczecie pracy watkow
 			for(int i= 1 ; i <=j ; i++)
 			{
 				lista_watkow.add(exe.submit( new Dzialanie(i , j) ));
 			//	System.out.print(i+", ");
 			}
-			
 			int sumuj=0;
+			//czekanie na zwroty z watkow
 			for(Future<Integer> x : lista_watkow)
 			{
 				
 				try {
-					 maciek =maciek+x.get();
+					 sumuj=sumuj+x.get();
 					
-					 if(maciek == Glowna.ilosc_odpowiedzi)
+					 if(sumuj == Glowna.ilosc_odpowiedzi)
 					 {
-						Dzialanie.znalezione=Glowna.ilosc_odpowiedzi;
-						break;
+						 koniec = System.currentTimeMillis();
+						 break;
 					 }
+					 //{
+				//		 koniec = System.currentTimeMillis();
+				//		break;
+				//	 }
 				} catch (InterruptedException | ExecutionException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -58,14 +64,14 @@ public class Watek {
 				
 			}
 			
-			if(j==maciek)
+			if(Dzialanie.znalezione == Glowna.ilosc_odpowiedzi)
 			{
-				System.out.println(j+"Watkow zakonczylo prace po : " + (System.currentTimeMillis()-current) + " sekundach");
+				System.out.println(j+"Watkow zakonczylo prace po : " + (koniec-current) + " sekundach");
 			}else
 			{
-				System.out.print(sumuj);
-				System.out.println(j+"Nie znalazło odpowiedzi :(  " + (System.currentTimeMillis()-current) + " sekundach");
 				
+				System.out.print(j+"Nie znalazło odpowiedzi :(  " + (koniec-current) + " sekundach");
+				System.out.println("\tznal:" +sumuj+"\tilos:"+Glowna.ilosc_odpowiedzi);
 			}
 			System.out.println();
 		}

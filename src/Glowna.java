@@ -31,43 +31,84 @@ public class Glowna {
 		}else
 		{
 			tab=zczytaj_z_pliku();
+			System.out.print("ilosc elemnetow : " +tab.length+ " ilosc odpowiedzi: " + ilosc_odpowiedzi+"\n");
 		}
-		
+		if(tab!=null)
+		{
 			int ilosc_watkow;
 			
 			System.out.println("podaj maksymalna ilosc watkow :");
 			ilosc_watkow = Integer.valueOf(new Scanner(System.in).next());
-			System.out.println("podaj ilosc odpowieddzi w pliku: ");
-			ilosc_odpowiedzi = Integer.valueOf(new Scanner(System.in).next());
-			//tu bedzie zczytywanie z pliku do tablicy 
+			//System.out.println("podaj ilosc odpowieddzi w pliku: ");
+		//	ilosc_odpowiedzi = Integer.valueOf(new Scanner(System.in).next());
+			 
 			
 			
 			Watek maciek = new Watek(ilosc_watkow );
-			
-		
-		
-	
+		}
 		System.out.println("Program zakonczyl prace  ");
+	
 	}
 
 	private static int[] zczytaj_z_pliku() {
-		int tab [];
+	
+		int iterator=0;
 		Scanner in;
 		try {
+			
+			
+			
 			in = new Scanner(new File("Liczby.txt"));
-		
+			//System.out.println("szu: "+in.next().substring(16)+"liczb: "+in.next().substring(12));
+			ilosc_odpowiedzi = Integer.valueOf(in.next().substring(16));
+			
+			int tab [] = new int[Integer.valueOf(in.next().substring(12))];
 			while(in.hasNext())
-			{
-				in.next();
+			{	
+				
+				String temp = in.next();
+				String dupa = "";
+				//przejscie po jednym wyrazie
+				for (int i=0; i < temp.length() ; i++)
+				{
+					
+					if (temp.charAt(i) == ':')
+					{
+						dupa = temp.substring(i+1);
+						
+					}
+				}
+				
+				if(dupa.equals(""))
+				{
+					//nic nie rob
+				}else if(dupa.equals("$"))
+				{
+					//wpisz -100
+					tab[iterator] = -100;
+					iterator++;
+				}
+				else
+				{
+					//wpisz normalnie
+				//	System.out.println("PARS: "+dupa);
+					tab[iterator] = Integer.valueOf(dupa);
+					iterator++;
+				}
 			}		
-		
-		
-		
-		
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.err.println("Plik Liczby.txt nie istnieje");
-		}
+//			
+		//	int sprawdzacz=0;
+			for(int x : tab)
+			{
+				//sprawdzacz++;
+			//	System.out.println(":" + x);
+			}
+		//	System.out.println("JEST LICZB :" + sprawdzacz);
+			return tab;
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				System.err.println("Plik Liczby.txt nie istnieje");
+			}
 		
 		return null;
 	}
@@ -87,6 +128,7 @@ public class Glowna {
 			System.out.println("Podaj ilosc szukanych");
 			szukane = Integer.valueOf(new Scanner(System.in).next());
 			//sprawdz czy dobrze podal
+			ilosc_odpowiedzi=szukane;
 			while(szukane <= 0)
 			{
 				System.out.println("Podaj poprawna ilosc szukanych !");
@@ -117,6 +159,7 @@ public class Glowna {
 		int test=0;
 		Set<Integer> wygrane;
 		PrintWriter zapis= new PrintWriter("Liczby.txt");
+		zapis.println("ilosc_szukanych/"+szukane+" ilosc_liczb/"+ilosc_liczb);
 		int [] tab_liczb = new int[ilosc_liczb+1];
 		Random generator= new Random();
 		//generuje liczby i ustawia iterator
@@ -131,7 +174,7 @@ public class Glowna {
 			{	
 				//System.out.print(i+", ");//pozycja umieszczenia
 				tab_liczb[i]=-100; test++;// w tablicy jest -100 xd
-				zapis.println(i+": $");
+				zapis.println(i+":$");
 				if(iterator.hasNext())
 				szukaj=(Integer) iterator.next();
 				
@@ -139,7 +182,7 @@ public class Glowna {
 			else
 			{
 				tab_liczb[i]=generator.nextInt(1000);
-				zapis.println(i+": "+tab_liczb[i]);
+				zapis.println(i+":"+tab_liczb[i]);
 			}
 		
 		}
